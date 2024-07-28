@@ -83,7 +83,7 @@ export async function createDiscordBot({ directory, installPackages, typescript,
 	const globStream = glob.stream('./src/**/*.ts');
 	for await (const file of globStream) {
 		const newData = await readFile(file, { encoding: 'utf8' }).then((str) =>
-			str.replaceAll('[REPLACE_IMPORT_EXT]', typescript ? 'ts' : 'js'),
+			str.replaceAll('[REPLACE_IMPORT_EXT]', typescript && (deno || bun) ? 'ts' : 'js'),
 		);
 		await writeFile(file, newData);
 	}
